@@ -4,16 +4,17 @@ import TransButton from "../comp/TransButton/TranselationButton"
 import Titel from "../comp/Titel"
 import { app } from "../firebaseConfig/config";
 import 'firebase/auth';
-import { getAuth, signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile} from 'firebase/auth';
-import { db } from '../firebaseConfig/config';
-import { collection, addDoc } from "firebase/firestore";
+import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+// import { getAuth, signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile} from 'firebase/auth';
+// import { db } from '../firebaseConfig/config';
+// import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
   const [t, i18n] = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  // const [showForm, setShowForm] = useState(false);
   const [dire, setDirection] = useState('ltr');
 
   const [email,setEmail]=useState('');
@@ -29,11 +30,12 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleMarkerClick = () => {
-    setShowForm(true);
-  };
+  // const handleMarkerClick = () => {
+  //   setShowForm(true);
+  // };
 
   const handleLogin = async () => {
+    console.log(dire ,i18n)
     
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -115,6 +117,7 @@ const Login = () => {
               src="assets/img/Screenshot%202023-08-02%20at%204.11.46%20PM.png"
               width={347}
               height={129}
+              alt="Al Firnas"
             />
             <div
               className="collapse navbar-collapse"

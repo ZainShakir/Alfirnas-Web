@@ -7,7 +7,7 @@ import { dataref } from '../../firebaseConfig/realtimedbconfig';
 
 function TicketDisplay({ticket,alfirnas}) {
 
-  const [status, setStatusText] = useState('');
+  // const [status, setStatusText] = useState('');
   const [isImageModalOpen, setImageModalOpen] = useState(false);
   const [imageModalUrl, setImageModalUrl] = useState('');
   const closeImageModal = () => {
@@ -93,7 +93,7 @@ function TicketDisplay({ticket,alfirnas}) {
          width={100}
          height={100}
          style={{paddingBottom:10,cursor: 'pointer' }}
-         alt="Location Picture"
+         alt="Location "
          onClick={() => openImageModal(ticket.image)}
         />
                   {isImageModalOpen && (
@@ -103,7 +103,7 @@ function TicketDisplay({ticket,alfirnas}) {
               </button>
               <img
                 src={imageModalUrl}
-                alt="Large Image"
+                alt="Large size"
                 style={{ maxWidth: '80%', maxHeight: '80%', margin: 'auto', display: 'block' }}
               />
             </div>

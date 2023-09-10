@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState,useRef } from 'react';
 import './Inference.css'; 
 
 import { collection, addDoc } from "firebase/firestore";
@@ -7,8 +7,8 @@ import {db} from '../../firebaseConfig/config';
 import Exif from 'exif-js';
 import axios from "axios"
 
-import { dataref } from '../../firebaseConfig/realtimedbconfig';
-import imageCompression from 'browser-image-compression';
+// import { dataref } from '../../firebaseConfig/realtimedbconfig';
+// import imageCompression from 'browser-image-compression';
 
 
 
@@ -21,8 +21,8 @@ function InferenceForm() {
 
   const [image,setImage]=useState(null);
 
-   const [predictions, setPredictions] = useState([]);
-   const [annotatedImage, setAnnotatedImage] = useState('');
+  //  const [predictions, setPredictions] = useState([]);
+  //  const [annotatedImage, setAnnotatedImage] = useState('');
 
 
   const[uploadMethod,setUploadMethod]=useState('upload');
@@ -189,8 +189,8 @@ function InferenceForm() {
           });
         
         
-            setPredictions(data.predictions);
-            setAnnotatedImage(compressed_image);
+            // setPredictions(data.predictions);
+            // setAnnotatedImage(compressed_image);
             console.log(data.predictions[0]);
              const docRef = await addDoc(collection(db, "userTickets"), {
                 image: compressed_image,
@@ -216,6 +216,8 @@ function InferenceForm() {
       } catch (error) {
         console.error('Error uploading image:', error);
         alert('Wrong Image Could not predict');
+      }finally{
+        setDisabled(false);
       }
   };
 
@@ -287,6 +289,7 @@ function InferenceForm() {
                     width={220}
                     height={80}
                     style={{paddingBottom:10}}
+                    alt="Al Firnas"
                 />
 
                 <div>
@@ -419,19 +422,19 @@ function InferenceForm() {
 
 
                 <div class="col-12">
-					<button type="submit" value="Run Inference" className="bttn__primary" >Run Inference</button>
+					<button type="submit" value="Run Inference" className="bttn__primary"  disabled={butdisabled}>Run Inference</button>
 				</div>
                
      </div>
 
-     <div className="result" id="resultContainer">
+     {/* <div className="result" id="resultContainer">
 				<div className="divider"></div>
 				<div className="result__header">
 					<h3 className="headline">Result</h3>
 					<a href="#">Copy Code</a>
 				</div>
                 <pre id="output" className="codeblock">here is your json </pre>
-			</div>
+			</div> */}
 
     
 

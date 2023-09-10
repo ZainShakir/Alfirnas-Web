@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect,useMemo } from 'react';
+import React, { useState, useRef, useEffect,useCallback } from 'react';
 import L from 'leaflet';
-import TicketForm from '../TicketForm/TicketForm';
+// import TicketForm from '../TicketForm/TicketForm';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebaseConfig/config';
 import TicketDisplay from '../TicketDisplay/TicketDisplay';
@@ -10,7 +10,7 @@ const IntMap = ({ onMarkerClick, alfirnas }) => {
   const prevData = useRef([]);
   
 
-  const fetchPost = async () => {
+  const fetchPost =useCallback( async () => {
     let query = collection(db, 'userTickets');
 
     try {
@@ -38,7 +38,7 @@ const IntMap = ({ onMarkerClick, alfirnas }) => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-  };
+  },[alfirnas]);
   
 
   useEffect(() => {
@@ -50,7 +50,16 @@ const IntMap = ({ onMarkerClick, alfirnas }) => {
     const intervalId = setInterval(fetchData, 50000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [fetchPost]);
+
+  const handleMarkerClick = (ticket) => {
+    if (selectedTicket && selectedTicket.serial_id === ticket.serial_id) {
+      setShowTicket(!showTicket);
+    } else {
+      setSelectedTicket(ticket);
+      setShowTicket(true);
+    }
+  };
 
   useEffect(() => {
     var icon = L.icon({
@@ -63,27 +72,20 @@ const IntMap = ({ onMarkerClick, alfirnas }) => {
       popupAnchor: [0, -41],
     });
 
-    TicketsData?.map((TData) => {
+    TicketsData?.forEach((TData) => {
       L.marker([TData.Latitude, TData.Longitude], { icon: icon })
         .addTo(mapInstance.current)
         .on('click', () => handleMarkerClick(TData)); // Handle marker click and set the selected ticket
         
     });
-  }, [TicketsData]);
+  }, [TicketsData,handleMarkerClick]);
 
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [showTicket, setShowTicket] = useState(false);
 
-  const handleMarkerClick = (ticket) => {
-    if (selectedTicket && selectedTicket.serial_id === ticket.serial_id) {
-      setShowTicket(!showTicket);
-    } else {
-      setSelectedTicket(ticket);
-      setShowTicket(true);
-    }
-  };
+ 
 
   useEffect(() => {
     if (mapRef.current && !mapInstance.current) {

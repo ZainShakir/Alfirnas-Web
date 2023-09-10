@@ -1,16 +1,16 @@
-import React,{useState,useEffect} from 'react';
-import { BrowserRouter as Router, Route, Routes,Navigate } from 'react-router-dom';
+import React,{useEffect} from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './pages/login';
 import FirnasLog from './pages/firnas_log';
 import MedLog from './pages/med_log';
 import { app } from './firebaseConfig/config';
 import 'firebase/auth'
-import PrivateRoute from './comp/PrivateRoute/PrivateRoute';
+// import PrivateRoute from './comp/PrivateRoute/PrivateRoute';
 import {onAuthStateChanged,getAuth} from 'firebase/auth';
 
 function App() {
 
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const auth = getAuth(app);
 
   useEffect(() => {
@@ -19,10 +19,10 @@ function App() {
       if (authUser) {
         console.log('User is authenticated:', authUser);
     
-        setUser(authUser);
+        // setUser(authUser);
       } else {
         console.log('User is not authenticated.');
-        setUser(null);
+        //setUser(null);
       }
     });
 
@@ -54,7 +54,7 @@ function App() {
         userRole={user ? user.displayName ==='madinahuser' ? 'user' : '' : ''}
       />*/}
        <Route path="/firnas_log" element={<FirnasLog/>} />
-    //     <Route path="/med_log" element={<MedLog/>} />
+       <Route path="/med_log" element={<MedLog/>} />
     
 
         {/* <Route

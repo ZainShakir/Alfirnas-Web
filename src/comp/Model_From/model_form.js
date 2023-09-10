@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 // import "./model_form.css";
 
 // Importing the CSS
@@ -6,13 +6,13 @@ import React, { useState, useRef } from "react";
 const Model_form = () => {
   const [model, setModel] = useState("tp_instancesegmentation_512px");
   const [version, setVersion] = useState("1");
-  const [apiKey, setApiKey] = useState("Ozg0GjyxRm0bnzAmhK91");
-  const [output, setOutput] = useState("");
-  const [activeMethod, setActiveMethod] = useState("upload");
-  const [activeFormat, setActiveFormat] = useState("json");
-  const [fileName, setFileName] = useState("");
-  const [url, setUrl] = useState("");
-  const fileInputRef = useRef(null);
+  // const [apiKey, setApiKey] = useState("Ozg0GjyxRm0bnzAmhK91");
+  // const [output, setOutput] = useState("");
+  // const [activeMethod, setActiveMethod] = useState("upload");
+  // const [activeFormat, setActiveFormat] = useState("json");
+  // const [fileName, setFileName] = useState("");
+  // const [url, setUrl] = useState("");
+  // const fileInputRef = useRef(null);
 
 
  
@@ -201,7 +201,7 @@ const Model_form = () => {
 
     </div>
   </div>
-  <div className="result" id="resultContainer">
+  {/* <div className="result" id="resultContainer">
     <div className="divider" />
     <div className="result__header">
       <h3 className="headline">Result</h3>
@@ -211,7 +211,7 @@ const Model_form = () => {
       {" "}
       here is your json{" "}
     </pre>
-  </div>
+  </div> */}
 </div>
 
     </form>

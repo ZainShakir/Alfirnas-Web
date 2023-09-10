@@ -12,6 +12,8 @@ const TranselationButton = ({ onDirectionChange }) => {
   
 
   const handleDirectionChange = () => {
+    console.log(t);
+    console.log(dire);
     const newLanguage = i18n.language === 'en' ? 'ar' : 'en';
     i18n.changeLanguage(newLanguage);
     const newDirection = newLanguage === 'ar' ? 'rtl' : 'ltr';

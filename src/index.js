@@ -4,31 +4,8 @@ import './index.css';
 import './i18n';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import Login from './pages/login';
-import FirnasLog from './pages/firnas_log';
-import MedLog from './pages/med_log';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Login />,  
-  },
 
-  {
-    path: "/firnas_log",
-    element: <FirnasLog />,  
-  },
-
-  {
-    path: "/med_log",
-    element: <MedLog />,  
-  },
- 
-]);
 
 
 

@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import IntMap from "../comp/intMap/intMap";
 import "../comp/TicketForm/TicketStyle.css"
 import { useTranslation } from 'react-i18next';
 import TransButton from "../comp/TransButton/TranselationButton";
 import TicketForm from "../comp/TicketForm/TicketForm";
 import "../local/rtl.css"
-import axios from 'axios';
-import Model_form from "../comp/Model_From/model_form";
+// import axios from 'axios';
+// import Model_form from "../comp/Model_From/model_form";
 import Titel from "../comp/Titel"
-import { getDownloadURL, uploadBytes, ref, uploadBytesResumable } from "firebase/storage";
-import { addDoc, collection } from "firebase/firestore";
-import { firebaseStorage, firestoreStorage } from "../firebaseConfig/config";
+// import { getDownloadURL, uploadBytes, ref, uploadBytesResumable } from "firebase/storage";
+// import { addDoc, collection } from "firebase/firestore";
+// import { firebaseStorage, firestoreStorage } from "../firebaseConfig/config";
 import InferenceForm from "../comp/Roboflow/InferenceForm";
 
 // const InferenceForm = () => {
@@ -174,55 +174,57 @@ const FirnasLog = () => {
   const [t, i18n] = useTranslation();
   const [showForm, setShowForm] = useState(false);
   const [dire, setDirection] = useState('ltr');
-  const [imgUrl, setImgUrl] = useState(null);
-  const [progresspercent, setProgresspercent] = useState(0);
+  // const [imgUrl, setImgUrl] = useState(null);
+  // const [progresspercent, setProgresspercent] = useState(0);
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const file = e.target[0]?.files[0]
-    if (!file) return;
-    const storageRef = ref(firebaseStorage, `files/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault()
+  //   const file = e.target[0]?.files[0]
+  //   if (!file) return;
+  //   const storageRef = ref(firebaseStorage, `files/${file.name}`);
+  //   const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on("state_changed",
-      (snapshot) => {
-        const progress =
-          Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        setProgresspercent(progress);
-        console.log(progress)
-      },
-      (error) => {
-        alert(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImgUrl(downloadURL)
-          addDatatoFirestore(downloadURL)
-        });
-      }
-    );
-  }
+  //   uploadTask.on("state_changed",
+  //     (snapshot) => {
+  //       const progress =
+  //         Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+  //       setProgresspercent(progress);
+  //       console.log(progress)
+  //     },
+  //     (error) => {
+  //       alert(error);
+  //     },
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //         setImgUrl(downloadURL)
+  //         addDatatoFirestore(downloadURL)
+  //       });
+  //     }
+  //   );
+  // }
   const handleMarkerClick = () => {
+    console.log(i18n);
     setShowForm(true);
   };
 
   const handleDirectionChange = (newDirection) => {
     setDirection(newDirection);
   };
-  const addDatatoFirestore = async (url) => {
-    const date = new Date()
-    try {
-      const docRef = await addDoc(collection(firestoreStorage, "files"), {
-        timeStamp: date,
-        url: url
-      });
 
-      console.log("Document written with ID: ", docRef.id);
+  // const addDatatoFirestore = async (url) => {
+  //   const date = new Date()
+  //   try {
+  //     const docRef = await addDoc(collection(firestoreStorage, "files"), {
+  //       timeStamp: date,
+  //       url: url
+  //     });
 
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  //     console.log("Document written with ID: ", docRef.id);
+
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+  // }
 
   return (
     <div>
@@ -247,6 +249,7 @@ const FirnasLog = () => {
           <img
             src="assets/img/Screenshot%202023-08-02%20at%204.11.46%20PM.png"
             width={347}
+            alt="Toggle option"
             height={129}
           />
           <div
@@ -462,13 +465,7 @@ const FirnasLog = () => {
               </div>
             </div>
           </section>
-          <h1
-            style={{
-              fontFamily: "Raleway, sans-serif",
-              textAlign: "center",
-              fontSize: 35
-            }}
-          />
+          
 
 
           <div style={{ display: 'flex' }}>

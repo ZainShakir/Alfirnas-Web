@@ -6,29 +6,30 @@ import { useTranslation } from 'react-i18next';
 import "../comp/TicketForm/TicketStyle.css"
 import "../local/rtl.css"
 import Titel from "../comp/Titel"
-import TicketDisplay from "../comp/TicketDisplay/TicketDisplay";
-import { PowerBIEmbed } from 'powerbi-client-react';
-import { models } from 'powerbi-client';
+// import TicketDisplay from "../comp/TicketDisplay/TicketDisplay";
+// import { PowerBIEmbed } from 'powerbi-client-react';
+// import { models } from 'powerbi-client';
 import "../pages/med_log.css";
 import { dataref } from '../firebaseConfig/realtimedbconfig';
 import DataTable from "../comp/DataTable/DataTable";
 
-import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { ref, getDownloadURL } from 'firebase/storage';
 import { firebaseStorage } from "../firebaseConfig/config";
 
 const MedLog = () => {
   const [t, i18n] = useTranslation();
-  const [showForm, setShowForm] = useState(false);
+  // const [showForm, setShowForm] = useState(false);
   const [dire, setDirection] = useState('ltr');
 
   const [data,setData]=useState([]);
 
 
-  const handleMarkerClick = () => {
-    setShowForm(true);
-  };
+  // const handleMarkerClick = () => {
+  //   setShowForm(true);
+  // };
 
   const handleDirectionChange = (newDirection) => {
+    console.log(i18n);
     setDirection(newDirection);
   };
 
@@ -85,6 +86,7 @@ const MedLog = () => {
           src="assets/img/Screenshot%202023-08-02%20at%204.11.46%20PM.png"
           width={347}
           height={129}
+          alt="Al Firnas"
         />
         <div
           className="collapse navbar-collapse"
@@ -223,12 +225,12 @@ const MedLog = () => {
           </div>
         </div>
       </section>
-      <h1
+      {/* <h1
         style={{
           fontFamily: "Raleway, sans-serif",
           fontSize: 35
         }}
-      />
+      /> */}
 
 
       <div >
@@ -306,7 +308,7 @@ const MedLog = () => {
         Download Excel
     </button>
     </div>
-    {data.length!=0 ? <DataTable data={data}/> : null}
+    {data.length!==0 ? <DataTable data={data}/> : null}
 
   </div>
   <footer className="text-center">

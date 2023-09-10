@@ -1,6 +1,5 @@
 import "./TicketStyle.css"
-import ticket from "../intMap/Markers.json"
-import React, {useState, useEffect} from "react";
+import React from "react";
 
 const TicketForm = ({ ticket }) => {
  
@@ -34,12 +33,12 @@ const TicketForm = ({ ticket }) => {
          width={100}
          height={100}
          style={{paddingBottom:10}}
-         alt="Location Picture"
+         alt="Location "
         />
 
     
         <div className="mx-auto text-center mt-1" id="actions">
-        <a
+        {/* <a
           onclick="updateStatus(1,82)"
           className="btn btn-success text-white mr-3"
         >
@@ -60,7 +59,7 @@ const TicketForm = ({ ticket }) => {
           target="_blank"
         >
           <i className="fa fa-cloud" /> Update ticket status
-        </a>
+        </a> */}
       </div>
       </div>
     </div>
