@@ -8,6 +8,7 @@ import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
 // import { getAuth, signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile} from 'firebase/auth';
 // import { db } from '../firebaseConfig/config';
 // import { collection, addDoc } from "firebase/firestore";
+// import { doc,getDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 
 
@@ -39,15 +40,16 @@ const Login = () => {
     
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-     
       const user = userCredential.user;
-     if(user.displayName ==='jumanhAdmin')
+  
+     if(user.displayName ==='jumanhAdmin' || user.displayName==='Traiq' )
      {
       navigate('/firnas_log');
      }else
      {
       navigate('/med_log')
      }
+    
      
     } catch (error) {
       alert(error.message);
