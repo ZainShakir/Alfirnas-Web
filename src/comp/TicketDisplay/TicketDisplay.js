@@ -58,13 +58,18 @@ function TicketDisplay({ticket,alfirnas}) {
             alert(err)
           }  finally{
             const id=generateNextId();
-            const ticket=generateNextTicketId();
-            dataref.ref("Sheet1").child(id).set({
-                "التاريخ":formattedDate, //date
-              "الحالة":ticket.status,    //Status
-              "الحي":ticket.name,   //Neighbourhood
-             "الفئة":"حواجز خرسانية", //Categories
-              "رقم التذكرة": ticket
+            const ticketno=generateNextTicketId();
+            dataref.ref("Sheet3").child(id).set({
+             "Ticket":ticketno,
+             "callername":"Firnas Aero",
+             "Date":formattedDate,
+             "subsublocationname":ticket.name,
+             "subsubclassificationname":ticket.prediction,
+             "category":ticket.prediction,
+             "longitude":ticket.Longitude,
+             "latitude":ticket.Latitude,
+             "Department":"TEST WF for Firnas",
+             "Status":ticket.status
             }).catch(alert);
             window.location.reload();
           }
