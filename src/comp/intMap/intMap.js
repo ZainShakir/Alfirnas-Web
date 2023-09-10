@@ -9,6 +9,15 @@ const IntMap = ({ onMarkerClick, alfirnas }) => {
   const [TicketsData, setData] = useState([]);
   const prevData = useRef([]);
   
+  
+  const handleMarkerClick = (ticket) => {
+    if (selectedTicket && selectedTicket.serial_id === ticket.serial_id) {
+      setShowTicket(!showTicket);
+    } else {
+      setSelectedTicket(ticket);
+      setShowTicket(true);
+    }
+  };
 
   const fetchPost =useCallback( async () => {
     let query = collection(db, 'userTickets');
@@ -52,15 +61,8 @@ const IntMap = ({ onMarkerClick, alfirnas }) => {
     return () => clearInterval(intervalId);
   }, [fetchPost]);
 
-  const handleMarkerClick = (ticket) => {
-    if (selectedTicket && selectedTicket.serial_id === ticket.serial_id) {
-      setShowTicket(!showTicket);
-    } else {
-      setSelectedTicket(ticket);
-      setShowTicket(true);
-    }
-  };
 
+// eslint-disable-next-line
   useEffect(() => {
     var icon = L.icon({
       iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
@@ -72,13 +74,15 @@ const IntMap = ({ onMarkerClick, alfirnas }) => {
       popupAnchor: [0, -41],
     });
 
+
     TicketsData?.forEach((TData) => {
       L.marker([TData.Latitude, TData.Longitude], { icon: icon })
         .addTo(mapInstance.current)
         .on('click', () => handleMarkerClick(TData)); // Handle marker click and set the selected ticket
         
     });
-  }, [TicketsData,handleMarkerClick]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [TicketsData]);
 
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
