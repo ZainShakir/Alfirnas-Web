@@ -18,8 +18,9 @@ function InferenceForm() {
   const [version, setVersion] = useState('');
   const [coordinates, setCoordinates] = useState(null);
   const [neighborhoodName, setNeighborhoodName] = useState('');
+ // const [base64Image, setBase64Image] = useState(null);
 
-  const [image,setImage]=useState(null);
+  //const [image,setImage]=useState(null);
 
   //  const [predictions, setPredictions] = useState([]);
   //  const [annotatedImage, setAnnotatedImage] = useState('');
@@ -88,9 +89,6 @@ function InferenceForm() {
     }
   };
 
-  
-
- 
 
   const [strokeWidth,setStrokeWidth]=useState('1');
 
@@ -101,6 +99,18 @@ function InferenceForm() {
   const handleLabelClick = (type) => {
  setLabel(type);
   };
+
+  // const handleImageChange = (e) => {
+  //     const file = e.target.files[0];
+  //     if (file) {
+  //       const reader = new FileReader();
+  //       reader.onload = () => {
+  //         const base64Image = reader.result.split(",")[1];
+  //         setBase64Image(base64Image);
+  //       };
+  //       reader.readAsDataURL(file);
+  //     }
+  // };
 
 
  async function compressBase64Image(base64Image, maxWidth, maxHeight, quality) {
@@ -139,11 +149,11 @@ function InferenceForm() {
             };
             reader.readAsDataURL(blob);
           },
-          'image/jpeg', // You can specify the desired output format (e.g., 'image/jpeg', 'image/png')
-          quality // Adjust the quality (0 to 1, where 1 is the highest quality)
+          'image/jpeg', 
+          quality 
         );
       };
-  
+
       img.src = base64Image;
     });
   }
@@ -156,30 +166,32 @@ function InferenceForm() {
     alert("Loading");
     setDisabled(true);
 
-      if (!image) return;
+      // if (!image) return;
 
-      const formData = new FormData();
-      formData.append('image', image);
+      // const formData = new FormData();
+      // formData.append('image', image);
     
-      try {
-        const response = await axios.post('http://192.168.100.9:5000/predict', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+      // try {
+      //   const response = await axios.post('https://jumanh.pythonanywhere.com/predict', formData, {
+      //     headers: {
+      //       'Content-Type': 'multipart/form-data',
+      //     },
+      //   });
     
-        if (response.status === 200) {
-          try {
+      //   if (response.status === 200) {
+      //     try {
             let compressed_image;
-          const data = response.data;
-         await compressBase64Image(`data:image/png;base64,${data.annotated_image_base64}`, 640, 640, 0.8)
+          //  `data:image/png;base64,${data.annotated_image_base64}`
+           
+      //     const data = response.data;
+    
+         await compressBase64Image(selectedFile, 640, 640, 0.8)
           .then((compressedBase64Image) => {
           
             if (compressedBase64Image.length <= 1048487) {
+              console.log("Compressed");
               console.log(compressedBase64Image);
               compressed_image=compressedBase64Image;
-              console.log("Compressed");
-              
             } else {
               console.error('Compressed image size exceeds the limit.');
             }
@@ -191,7 +203,8 @@ function InferenceForm() {
         
             // setPredictions(data.predictions);
             // setAnnotatedImage(compressed_image);
-            console.log(data.predictions[0]);
+            try{
+          //  console.log(data.predictions[0]);
              const docRef = await addDoc(collection(db, "userTickets"), {
                 image: compressed_image,
                 confidence:minConfidence,
@@ -200,8 +213,10 @@ function InferenceForm() {
                 Longitude:coordinates.LONG.toString(),
                 className:FilterClassName,
                 name:neighborhoodName,
-                prediction:data.predictions[0],
-                prediction_quantity:data.predictions[1],
+                // prediction:data.predictions[0],
+                // prediction_quantity:data.predictions[1],
+                prediction:"Not working",
+                prediction_quantity:"Not working",
                 Department:'TEST WF For FIRNAS',
                 status:"فتوحة",
               });
@@ -213,13 +228,13 @@ function InferenceForm() {
               setDisabled(false);
             }
         }
-      } catch (error) {
-        console.error('Error uploading image:', error);
-        alert('Wrong Image Could not predict');
-      }finally{
-        setDisabled(false);
-      }
-  };
+      // } catch (error) {
+      //   console.error('Error uploading image:', error);
+      //   alert('Wrong Image Could not predict');
+      // }finally{
+      //   setDisabled(false);
+      // }
+//  };
 
  
   
@@ -240,9 +255,8 @@ function InferenceForm() {
     if (file) {
       const reader = new FileReader();
       console.log("file"+file);
-      setImage(file);
-      
-  
+      //setImage(file);
+
       reader.onload = (event) => {
         const base64Image = event.target.result;
         setFilename(file.name)
@@ -254,7 +268,6 @@ function InferenceForm() {
             if (exifData.GPSLatitude && exifData.GPSLongitude) {
               const latitude = exifData.GPSLatitude[0] + exifData.GPSLatitude[1] / 60 + exifData.GPSLatitude[2] / 3600;
               const longitude = exifData.GPSLongitude[0] + exifData.GPSLongitude[1] / 60 + exifData.GPSLongitude[2] / 3600;
-         
               setCoordinates({
                 LATE: latitude,
                 LONG: longitude
@@ -378,7 +391,7 @@ function InferenceForm() {
                     <div class="col-6-m3" id="format">
 					<label class="input__label">Inference Result</label>
 					<div>
-                    <button
+          <button
             data-value="image"
             id='imageButton'
             type='button'
