@@ -20,7 +20,7 @@ function TicketDisplay({ticket,alfirnas}) {
     setImageModalOpen(true);
   };
   
-  const lastUsedIdRef = useRef(962);
+  const lastUsedIdRef = useRef(4999);
   const lastusedticketid=useRef(4999);
   //handleTranslate(ticket.status);
 

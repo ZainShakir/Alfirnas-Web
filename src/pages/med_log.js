@@ -295,7 +295,8 @@ const MedLog = () => {
       className="myClassname"
       allowFullScreen={true}
     /> */}
-<Iframe title="Report Section" width="1300" height="900" src="https://app.powerbi.com/view?r=eyJrIjoiNWEyMTM5MmItNjlmNS00ZjRjLWJjNTctYmJkNGZjODA5ZGE2IiwidCI6ImI0NTNkOTFiLTZhYzEtNGI2MS1iOGI4LTVlNjVlNDIyMjMzZiIsImMiOjl9" frameborder="0" allowFullScreen="true"  id="myId"
+
+<Iframe title="Report Section" width="1300" height="900" src="https://app.powerbi.com/view?r=eyJrIjoiMDI1M2E4YTQtYTRhNC00MDhhLTk4YmItZmI4ODAwODE2ZGI5IiwidCI6ImI0NTNkOTFiLTZhYzEtNGI2MS1iOGI4LTVlNjVlNDIyMjMzZiIsImMiOjl9" frameborder="0" allowFullScreen="true"  id="myId"
       className="myClassname"/>
   </div>
   <div className="container" style={{marginTop:20}}>
