@@ -1,31 +1,36 @@
 import React, {useState} from "react";
 import { useTranslation } from 'react-i18next';
-import TransButton from "../comp/TransButton/TranselationButton"
-import Titel from "../comp/Titel"
-import { app } from "../firebaseConfig/config";
+import Titel from "../Components/Title"
+//  import { app } from "../Config/Config";
 import 'firebase/auth';
-import { getAuth, signInWithEmailAndPassword} from 'firebase/auth';
-// import { getAuth, signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile} from 'firebase/auth';
-// import { db } from '../firebaseConfig/config';
-// import { collection, addDoc } from "firebase/firestore";
-// import { doc,getDoc } from "firebase/firestore";
-import { useNavigate } from 'react-router-dom';
+// import { db } from '../Config/Config';
+import { Link,useNavigate,useSearchParams} from "react-router-dom";
+import Header from "../Layouts/Header/Header";
+import { useAuth } from "../Context/AuthContext"
+import {  Alert } from "react-bootstrap"
 
-
-const Login = () => {
+const Login = (props) => {
   const [t, i18n] = useTranslation();
+  const [searchparams]=useSearchParams();
+  console.log(searchparams.get('type'));
+  
   const [showPassword, setShowPassword] = useState(false);
-  // const [showForm, setShowForm] = useState(false);
+ // const [showForm, setShowForm] = useState(false);
   const [dire, setDirection] = useState('ltr');
+  const [error, setError] = useState("")
+  const { login } = useAuth();
+  
 
   const [email,setEmail]=useState('');
   const [password,setPassword]=useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const auth = getAuth(app);
+  //const auth = getAuth(app);
 
   const handleDirectionChange = (newDirection) => {
     setDirection(newDirection);
+    console.log(dire,i18n);
   };
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -35,160 +40,49 @@ const Login = () => {
   //   setShowForm(true);
   // };
 
-  const handleLogin = async () => {
-    console.log(dire ,i18n)
+ // const handleLogin = async (e) => {
     
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-  
-     if(user.displayName ==='jumanhAdmin' || user.displayName==='Traiq' )
-     {
-      navigate('/firnas_log');
-     }else
-     {
-      navigate('/med_log')
-     }
     
+    // try {
+    //   const userCredential = await signInWithEmailAndPassword(auth, email, password);
      
-    } catch (error) {
-      alert(error.message);
-      console.error('Error logging in:', error.message);
-    }
-  };
+    //   const user = userCredential.user;
+    //  if(user.displayName ==='jumanhAdmin')
+    //  {
+    //   navigate('/firnas_log');
+    //  }else
+    //  {
+    //   navigate('/med_log')
+    //  }
+     
+    // } catch (error) {
+    //   alert(error.message);
+    //   console.error('Error logging in:', error.message);
+    // }
+  //};
 
-
-  // async function registerWithEmailAndPassword(email, password, displayName,role) {
-  //   try {
-      
-  //     // Create the user in Firebase Authentication
-  //     const userCredential = await createUserWithEmailAndPassword(auth, email, password,displayName);
-  //     const user = userCredential.user;
-  
-  //     // await setCustomUserClaims(auth, user.uid, { role });
-  //     // const customClaims = { role: 'admin' };
-  //     // await autha.setCustomUserClaims(user.uid,customClaims);
-
-  //     await updateProfile(user, { displayName });
-
-  //     const docRef = await addDoc(collection(db, "users"), {
-  //       email:email,
-  //       password:password,
-  //       displayName:displayName,
-  //       role:role
-  //     });
-  
-  //     console.log(user);
-  //     console.log("Document written with ID: ", docRef.id);
-
-      
-  //   } catch (error) {
-  //     // Handle registration errors
-  //     console.error('Error registering user:', error.message);
-  //     throw error;
-  //   }
-  // }
+  async  function handleLogin(e){
+   e.preventDefault();
+   try{
+    setError("")
+    setLoading(true)
+    await login(email,password);
+    navigate('/');
+    
+   }catch{
+    setError("Failed to log in")
+   }
+   setLoading(false)
+  }
 
 
   
   return (
     <>
      <Titel/>
-     <style>
-     TransButton{
-      
-     }
-     </style>
-      <header className="bg-dark">
-        <nav
-          className="navbar navbar-expand-md sticky-top py-3 navbar-dark"
-          id="mainNav"
-          style={{ background: "#025F5F", color: "#00544D" }}
-        >
-          <div className="container">
-          <TransButton onDirectionChange={handleDirectionChange}/>
-            <button
-              data-bs-toggle="collapse"
-              data-bs-target="#navcol-2"
-              className="navbar-toggler"
-            >
-              <span className="visually-hidden">Toggle navigation</span>
-              <span className="navbar-toggler-icon" />
-            </button>
-            <img
-              src="assets/img/Screenshot%202023-08-02%20at%204.11.46%20PM.png"
-              width={347}
-              height={129}
-              alt="Al Firnas"
-            />
-            <div
-              className="collapse navbar-collapse"
-              id="navcol-1"
-              style={{
-                borderStyle: "none",
-                color: "rgba(0,84,77,0)",
-                marginRight: "-475px",
-                paddingRight: 170,
-                height:150
-              }}
-            >
-              <button
-                className="btn btn-primary"
-                data-bss-hover-animate="flash"
-                type="button"
-                style={{
-                  background: 'url("assets/img/logo.png") no-repeat, #00000000',
-                  backgroundSize: "cover, auto",
-                  width: 292,
-                  height: 102,
-                  transform: "perspective(0px)",
-                  color: "rgba(0,0,0,0)",
-                  marginRight: 23,
-                  paddingRight: 0,
-                  paddingBottom: 0,
-                  marginBottom: 21,
-                  borderColor: "#025F5F",
-                }}
-              />
-              <button
-                className="btn btn-primary"
-                type="button"
-                style={{
-                  background:
-                    'url("assets/img/logo1.png") no-repeat, #00000000',
-                  backgroundSize: "cover, auto",
-                  width: 341,
-                  height: 104,
-                  transform: "perspective(0px)",
-                  color: "rgba(0,0,0,0)",
-                  paddingBottom: 0,
-                  marginBottom: 3,
-                  marginRight: 12,
-                  paddingRight: 0,
-                  marginTop: 34,
-                  borderColor: "#025F5F",
-                }}
-              />
-  
-              
-              <ul className="navbar-nav mx-auto">
-                <li className="nav-item" />
-              </ul>
-            </div>
-            <div
-              className="collapse navbar-collapse"
-              id="navcol-2"
-              style={{
-                borderStyle: "none",
-                color: "rgba(0,84,77,0)",
-                marginRight: "-475px",
-                paddingRight: 170,
-              }}
-            />
-          </div>
-        </nav>
-      </header>
-      <section
+     <Header  handleDirectionChange={handleDirectionChange}/>
+   
+     <section
         className="py-4 py-xl-5"
         style={{ background: "#ffffff", paddingTop: 43, marginTop: 39 }}
       >
@@ -226,6 +120,9 @@ const Login = () => {
                     {t("MemLog")}
                     </span>
                   </strong>
+                  <div>
+                  {error && <Alert variant="danger">{error}</Alert>}
+                  </div>
                 </p>
                 <div
                   style={{
@@ -329,7 +226,34 @@ const Login = () => {
             />
               
           </div>
+
+          
                 </div>
+                <div>
+                <button
+                  className="btn btn-primary text-center"
+                  type="button"
+                  style={{
+                    margin: 13,
+                    background: "rgb(3,94,95)",
+                    paddingLeft: 39,
+                    paddingRight: 39,
+                    marginRight: "-3px",
+                    fontFamily: "Raleway, sans-serif",
+                    borderStyle: "none",
+                    color: "rgb(255,255,255)",
+                    fontWeight: "bold",
+                  }}
+                 onClick={()=>navigate('/Usertype')}
+                >
+                  {/* <a
+                    href="/firnas_log"
+                    style={{ color: "rgb(255,255,255)", fontSize: 18 }}
+                  >
+                    {t("Login")}
+                  </a> */}
+                  {t("Gobak")}
+                </button>
                 <button
                   className="btn btn-primary text-center"
                   type="button"
@@ -345,8 +269,8 @@ const Login = () => {
                     color: "rgb(255,255,255)",
                     fontWeight: "bold",
                   }}
+                 disabled={loading} 
                  onClick={handleLogin}
-                 
                 >
                   {/* <a
                     href="/firnas_log"
@@ -356,6 +280,14 @@ const Login = () => {
                   </a> */}
                   {t("Login")}
                 </button>
+
+                </div>
+                
+                {searchparams.get('type') === 'Madinah' && (
+                    <div className="w-100 mt-2">
+                      Reset Password? <Link to="/ResetPassword">Click Here</Link>
+                    </div>
+                   )}
               </div>
 
 

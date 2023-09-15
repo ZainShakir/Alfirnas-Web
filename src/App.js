@@ -1,73 +1,32 @@
-import React,{useEffect} from 'react';
-import { Route, Routes ,HashRouter as Router} from 'react-router-dom';
-import Login from './pages/login';
-import FirnasLog from './pages/firnas_log';
-import MedLog from './pages/med_log';
-import { app } from './firebaseConfig/config';
-import 'firebase/auth'
-// import PrivateRoute from './comp/PrivateRoute/PrivateRoute';
-import {onAuthStateChanged,getAuth} from 'firebase/auth';
+
+import './App.css';
+import { HashRouter as Router, Route, Routes} from 'react-router-dom';
+import { AuthProvider } from './Context/AuthContext';
+import Login from './Pages/Login';
+import PrivateRoute from './Routes/PrivateRoute';
+import ResetPassword from './Pages/ResetPassword';
+import Dashboard from './Pages/Dashboard';
+import UserType from './Pages/UserType';
 
 function App() {
-
-  // const [user, setUser] = useState(null);
-  const auth = getAuth(app);
-
-  useEffect(() => {
-    console.log("CAelld")
-    const unsubscribe = onAuthStateChanged(auth,(authUser) => {
-      if (authUser) {
-        console.log('User is authenticated:', authUser);
-    
-        // setUser(authUser);
-      } else {
-        console.log('User is not authenticated.');
-        //setUser(null);
-      }
-    });
-
-    return () => unsubscribe();
-  }, [auth]);
-
-
   return (
-    // <Router>
-    //   <div className="App">
-    //     <Route path="/" component={Login} />
-    //     <Route path="/firnas_log" component={FirnasLog} />
-    //     <Route path="/med_log" component={MedLog} />
-    //     {/* Other routes and components */}
-    //   </div>
-    // </Router>
-
-      <Router>
-     <Routes>
-      <Route path="/" element={<Login />} />
-      {/* <PrivateRoute
-        path="/firnas_log"
-        component={FirnasLog}
-        userRole={user ? user.displayName ==='jumanhAdmin' ? 'admin' : '' : ''}
-      />
-      <PrivateRoute
-        path="/med_log"
-        component={MedLog}
-        userRole={user ? user.displayName ==='madinahuser' ? 'user' : '' : ''}
-      />*/}
-       <Route path="/firnas_log" element={<FirnasLog/>} />
-       <Route path="/med_log" element={<MedLog/>} />
-    
-
-        {/* <Route
-          path="/firnas_log"
-          element={<PrivateRoute component={<FirnasLog/>}  userRole={user ? user.displayName ==='jumanhAdmin' ? 'admin' : '' : ''} />}
-        />
-        <Route
-          path="/med_log"
-          element={<PrivateRoute component={<MedLog/>} userRole={user ? user.displayName ==='madinahuser' ? 'user' : '' : ''} />}
-        />
-         <Route path="*" element={<Navigate to="/" />} /> */}
-      </Routes> 
-      </Router>
+    <Router>
+      <AuthProvider>
+        <Routes>
+        <Route path="/"
+                element={
+                  <PrivateRoute>
+                    <Dashboard/>
+                  </PrivateRoute>
+                }
+              ></Route>
+          <Route path='/Usertype' element={<UserType/>}/>
+          <Route path='/Login' element={<Login/>}/>
+          <Route path='/ResetPassword' element={<ResetPassword/>}/>
+         
+        </Routes>
+      </AuthProvider>
+    </Router>
   );
 }
 
