@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../Config/Config";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../Context/AuthContext";
 import Loading from "../Components/Loading/Loading";
 import { collection, getDocs, where, query } from "firebase/firestore";
 import Alfirnas from "./Alfirnas";
@@ -23,6 +23,7 @@ function Dashboard() {
         if (!querySnapshot.empty) {
           const userData = querySnapshot.docs[0].data();
           setRole(userData.role);
+          console.log(userData);
         } else {
           console.log("User not found");
         }
@@ -40,7 +41,7 @@ function Dashboard() {
     return <Loading />;
   }
 
-  return <>{role === "admin" ? <Alfirnas /> : <MedLog />}</>;
+  return <>{!loading && role === "admin" ? <Alfirnas /> : <MedLog />}</>;
 }
 
 export default Dashboard;

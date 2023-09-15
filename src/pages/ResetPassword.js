@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../Context/AuthContext";
 import { Link } from "react-router-dom";
 import Header from "../Layouts/Header/Header";
 import { useTranslation } from "react-i18next";
