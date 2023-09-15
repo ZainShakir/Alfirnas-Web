@@ -6,7 +6,7 @@ import "firebase/auth";
 // import { db } from '../Config/Config';
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Header from "../Layouts/Header/Header";
-import { useAuth } from "../Context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import { Alert } from "react-bootstrap";
 
 const Login = (props) => {

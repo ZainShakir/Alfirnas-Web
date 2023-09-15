@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../Config/Config";
-import { useAuth } from "../Context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 import Loading from "../Components/Loading/Loading";
 import { collection, getDocs, where, query } from "firebase/firestore";
 import Alfirnas from "./Alfirnas";
