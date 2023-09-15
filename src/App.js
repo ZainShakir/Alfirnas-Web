@@ -1,6 +1,6 @@
 import "./App.css";
 import { HashRouter as Router, Route, Routes } from "react-router-dom";
-import { AuthProvider } from "./Context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import Login from "./Pages/Login";
 import PrivateRoute from "./Routes/PrivateRoute";
 import ResetPassword from "./Pages/ResetPassword";
