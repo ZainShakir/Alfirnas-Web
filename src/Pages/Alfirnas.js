@@ -48,7 +48,6 @@ function Alfirnas() {
   //   );
   // }
   const handleMarkerClick = () => {
-    console.log(i18n);
     setShowForm(true);
   };
 
@@ -204,7 +203,7 @@ function Alfirnas() {
             </div>
             {showForm && (
               <div style={{ flex: 1 }}>
-                <TicketForm />
+                <TicketForm setShowForm={setShowForm} />
               </div>
             )}
           </div>

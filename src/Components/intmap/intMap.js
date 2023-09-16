@@ -93,6 +93,11 @@ const IntMap = ({ onMarkerClick, alfirnas }) => {
   const [selectedTicket, setSelectedTicket] = useState(null);
   const [showTicket, setShowTicket] = useState(false);
 
+  const handleClose = () => {
+    setSelectedTicket(null);
+    setShowTicket(false);
+  };
+
   useEffect(() => {
     if (mapRef.current && !mapInstance.current) {
       mapInstance.current = L.map(mapRef.current, {
@@ -111,7 +116,11 @@ const IntMap = ({ onMarkerClick, alfirnas }) => {
     <div style={{ display: 'flex' }}>
       <div ref={mapRef} style={{ height: '650px', width: '100%' }} />
       {showTicket && selectedTicket && (
-        <TicketDisplay ticket={selectedTicket} alfirnas={alfirnas} />
+        <TicketDisplay
+          ticket={selectedTicket}
+          alfirnas={alfirnas}
+          handleClose={handleClose}
+        />
       )}
     </div>
   );

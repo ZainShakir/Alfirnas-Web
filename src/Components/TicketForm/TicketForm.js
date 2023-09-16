@@ -1,14 +1,13 @@
-import "./TicketStyle.css"
-import React from "react";
+import './TicketStyle.css';
+import React from 'react';
 
-const TicketForm = ({ ticket }) => {
- 
+const TicketForm = ({ ticket, setShowForm }) => {
   return (
-    
-    <div className="card ticket" 
-         id={`ticket${ticket.Ticket_ID}`} 
-         style={{ display: "block" }}>
-
+    <div
+      className="card ticket"
+      id={`ticket${ticket.Ticket_ID}`}
+      style={{ display: 'block' }}
+    >
       <div className="card-header">
         <h4 className="m-0">Ticket details</h4>
       </div>
@@ -28,17 +27,16 @@ const TicketForm = ({ ticket }) => {
             View on Google Maps
           </a>
         </p>
-        <img 
-         src={`data:image/png;base64,${ticket.img}`}
-         width={100}
-         height={100}
-         style={{paddingBottom:10}}
-         alt="Location "
+        <img
+          src={`data:image/png;base64,${ticket.img}`}
+          width={100}
+          height={100}
+          style={{ paddingBottom: 10 }}
+          alt="Location "
         />
 
-    
         <div className="mx-auto text-center mt-1" id="actions">
-        {/* <a
+          {/* <a
           onclick="updateStatus(1,82)"
           className="btn btn-success text-white mr-3"
         >
@@ -60,18 +58,10 @@ const TicketForm = ({ ticket }) => {
         >
           <i className="fa fa-cloud" /> Update ticket status
         </a> */}
-      </div>
+        </div>
       </div>
     </div>
   );
 };
-
-
-
-
-
-
-
-
 
 export default TicketForm;
