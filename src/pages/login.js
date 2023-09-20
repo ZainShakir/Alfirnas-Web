@@ -8,6 +8,13 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Header from "../Layouts/Header/Header";
 import { useAuth } from "../context/AuthContext";
 import { Alert } from "react-bootstrap";
+import Input from "../Components/Input";
+import {
+  EnvelopeIcon,
+  LockClosedIcon,
+  EyeIcon,
+  EyeSlashIcon,
+} from "@heroicons/react/20/solid";
 
 const Login = (props) => {
   const [t, i18n] = useTranslation();
@@ -73,42 +80,20 @@ const Login = (props) => {
   }
 
   return (
-    <>
+    <div className="bg-white" style={{ minHeight: "calc(100vh)" }}>
       <Titel />
       <Header handleDirectionChange={handleDirectionChange} />
 
-      <section
-        className="py-4 py-xl-5"
-        style={{ background: "#ffffff", paddingTop: 43, marginTop: 39 }}
-      >
-        <div className="container" style={{ textAlign: "center" }}>
-          <div className="bg-dark border rounded border-0 border-dark overflow-hidden">
-            <div
-              className="row g-0"
-              style={{
-                background: "#ffffff",
-                border: "6px solid rgb(3,94,95,0.5)",
-
-                justifyContent: "center",
-              }}
-            >
-              <div
-                className="col-md-6 col-xxl-6 order-first order-md-last"
-                style={{
-                  minHeight: 250,
-                  paddingTop: 12,
-                  marginTop: 75,
-                  minWidth: 5,
-                }}
-              >
+      <section className="py-4 py-xl-5">
+        <div className="container text-center">
+          <div className="">
+            <div className="flex justify-center items-center border-[6px] border-[rgb(3,94,95,0.5)] bg-white py-3 px-3">
+              <div className="">
                 <p
+                  className="text-[25px] font-bold text-[rgb(3,94,95)] text-center"
                   style={{
-                    fontSize: 25,
-                    fontWeight: "bold",
                     letterSpacing: 1,
-                    color: "rgb(3,94,95)",
                     fontFamily: "Raleway, sans-serif",
-                    textAlign: "center",
                   }}
                 >
                   <strong>
@@ -118,150 +103,162 @@ const Login = (props) => {
                   </strong>
                   <div>{error && <Alert variant="danger">{error}</Alert>}</div>
                 </p>
-                <div
+                <Input
+                  type="email"
+                  leftIcon={
+                    <EnvelopeIcon
+                      className="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  }
+                  rightIcon={
+                    <LockClosedIcon
+                      className="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  }
+                  label="Email"
+                  name="email"
+                  value={email}
+                  placeholder={t("ُEmail")}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  leftIcon={
+                    <LockClosedIcon
+                      className="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  }
+                  rightIcon={
+                    showPassword ? (
+                      <EyeSlashIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                        onClick={togglePasswordVisibility}
+                      />
+                    ) : (
+                      <EyeIcon
+                        className="h-5 w-5 text-gray-400"
+                        aria-hidden="true"
+                        onClick={togglePasswordVisibility}
+                      />
+                    )
+                  }
+                  label="Password"
+                  name="password"
+                  value={password}
+                  placeholder={t("Password")}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {/* <div
                   style={{
-                    background: "#f1f1f1",
+                    background: '#f1f1f1',
                     borderRadius: 25,
                     padding: 7,
                     // textAlign: "left",
                     marginRight: 104,
                     marginLeft: 103,
-                    backgroundColor: "#f1f1f1",
-                    flexDirection: "row",
+                    backgroundColor: '#f1f1f1',
+                    flexDirection: 'row',
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                     <i
                       className="fas fa-envelope"
-                      style={{ color: "rgb(152,152,152)", marginLeft: 15 }}
+                      style={{ color: 'rgb(152,152,152)', marginLeft: 15 }}
                     />
                     <input
                       type="text"
                       style={{
-                        background: "rgba(255,255,255,0)",
-                        borderStyle: "none",
+                        background: 'rgba(255,255,255,0)',
+                        borderStyle: 'none',
                         marginRight: 10,
-                        color: "rgb(152,152,152)",
-                        fontFamily: "Raleway, sans-serif",
+                        color: 'rgb(152,152,152)',
+                        fontFamily: 'Raleway, sans-serif',
                         fontSize: 18,
-                        fontWeight: "bold",
+                        fontWeight: 'bold',
                         marginLeft: 50,
                         width: 300,
                       }}
-                      placeholder={t("ُEmail")}
+                      placeholder={t('ُEmail')}
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
-                </div>
+                </div> */}
 
-                <div
+                {/* <div
                   style={{
-                    background: "#f1f1f1",
+                    background: '#f1f1f1',
                     borderRadius: 25,
                     padding: 7,
                     marginTop: 15,
                     // textAlign: "left",
                     marginRight: 104,
                     marginLeft: 103,
-                    backgroundColor: "#f1f1f1",
+                    backgroundColor: '#f1f1f1',
                     fontSize: 18,
-                    flexDirection: "row",
-                    fontWeight: "bold",
-                    display: "flex",
-                    position: "relative",
+                    flexDirection: 'row',
+                    fontWeight: 'bold',
+                    display: 'flex',
+                    position: 'relative',
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
                     <i
                       className="fas fa-lock"
                       style={{
                         marginLeft: 15,
-                        color: "rgb(152,152,152)",
+                        color: 'rgb(152,152,152)',
                         fontSize: 18,
-                        fontWeight: "bold",
+                        fontWeight: 'bold',
                       }}
                     />
                     <input
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword ? 'text' : 'password'}
                       style={{
-                        background: "rgba(255,255,255,0)",
-                        borderStyle: "none",
+                        background: 'rgba(255,255,255,0)',
+                        borderStyle: 'none',
                         marginLeft: 50,
-                        color: "rgb(152,152,152)",
+                        color: 'rgb(152,152,152)',
                         fontSize: 18,
-                        fontWeight: "bold",
+                        fontWeight: 'bold',
                         flex: 1,
                       }}
-                      placeholder={t("Password")}
+                      placeholder={t('Password')}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
                     <i
                       onClick={togglePasswordVisibility}
                       className={
-                        showPassword ? "fas fa-eye-slash" : "fas fa-eye"
+                        showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'
                       }
                       style={{
-                        position: "absolute",
+                        position: 'absolute',
                         right: 15,
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        cursor: "pointer",
-                        color: "rgb(152,152,152)",
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        cursor: 'pointer',
+                        color: 'rgb(152,152,152)',
                       }}
                     />
                   </div>
-                </div>
-                <div>
+                </div> */}
+                <div className="mt-3 flex flex-col sm:flex-row  gap-3 justify-center items-center">
                   <button
-                    className="btn btn-primary text-center"
-                    type="button"
-                    style={{
-                      margin: 13,
-                      background: "rgb(3,94,95)",
-                      paddingLeft: 39,
-                      paddingRight: 39,
-                      marginRight: "-3px",
-                      fontFamily: "Raleway, sans-serif",
-                      borderStyle: "none",
-                      color: "rgb(255,255,255)",
-                      fontWeight: "bold",
-                    }}
+                    className="mybtn"
                     onClick={() => navigate("/Usertype")}
                   >
-                    {/* <a
-                    href="/firnas_log"
-                    style={{ color: "rgb(255,255,255)", fontSize: 18 }}
-                  >
-                    {t("Login")}
-                  </a> */}
                     {t("Gobak")}
                   </button>
                   <button
-                    className="btn btn-primary text-center"
-                    type="button"
-                    style={{
-                      margin: 13,
-                      background: "rgb(3,94,95)",
-                      paddingLeft: 39,
-                      paddingRight: 39,
-                      marginRight: "-3px",
-
-                      fontFamily: "Raleway, sans-serif",
-                      borderStyle: "none",
-                      color: "rgb(255,255,255)",
-                      fontWeight: "bold",
-                    }}
+                    className="mybtn"
                     disabled={loading}
                     onClick={handleLogin}
                   >
-                    {/* <a
-                    href="/firnas_log"
-                    style={{ color: "rgb(255,255,255)", fontSize: 18 }}
-                  >
-                    {t("Login")}
-                  </a> */}
                     {t("Login")}
                   </button>
                 </div>
@@ -286,7 +283,7 @@ const Login = (props) => {
         </div>
       </section>
       <section />
-    </>
+    </div>
   );
 };
 

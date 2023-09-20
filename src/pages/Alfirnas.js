@@ -72,7 +72,7 @@ function Alfirnas() {
   // }
 
   return (
-    <div>
+    <div className="bg-white h-screen overflow-y-scroll scrollbar-thin scrollbar-track-black scrollbar-thumb-[#025F5F] scrollbar-thumb-rounded-xl">
       <Titel />
       <Header
         handleDirectionChange={handleDirectionChange}
@@ -157,10 +157,7 @@ function Alfirnas() {
                   </form>
                 </div>
               </div> */}
-          <section
-            className="py-4 py-xl-5"
-            style={{ marginTop: "-30px", marginBottom: "-33px" }}
-          >
+          <section className="py-4 py-xl-5">
             <div className="container">
               <div
                 className="text-white bg-primary border rounded border-0 border-primary d-flex flex-column justify-content-between flex-lg-row p-4 p-md-5"
@@ -221,8 +218,6 @@ function Alfirnas() {
           </footer>
         </section>
       </div>
-      <section />
-      <section />
     </div>
   );
 }

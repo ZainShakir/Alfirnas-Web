@@ -1,53 +1,44 @@
-import React from "react";
-import TranslationButton from "../../Components/TranslationButton/TranslationButton";
+import React from 'react';
+import TranslationButton from '../../Components/TranslationButton/TranslationButton';
+import logo from '../../assets/images/logo.png';
+import logo1 from '../../assets/images/logo1.png';
 
 function Header({ handleDirectionChange, currentUser, logout, user }) {
   return (
-    <div
-      className="flex px-4 py-4 justify-between"
-      style={{ backgroundColor: "#025F5F" }}
-    >
-      <div className="flex w-20 h-28 justify-center  items-center ">
+    <div className="bg-[#025F5F] text-[#00544D] py-5 z-[100]">
+      <div className="container h-full  flex flex-col sm:flex-row justify-between items-center">
         <TranslationButton onDirectionChange={handleDirectionChange} />
-      </div>
-      <div className="flex w-70 h-30 justify-center ">
-        <div>
+        <div className="flex justify-center items-center my-4 sm:my-0">
           <img
-            src="assets/img/logo.png"
-            width={292}
-            alt="Toggle option"
-            height={102}
+            className="md:w-[292px] md:h-[102px] w-[100px] h-auto"
+            src={logo}
+            alt="logo"
+          />
+          <img
+            className="relative md:top-[10px] top-[5px] md:w-[341px] md:h-[104px] w-[130px] h-auto"
+            src={logo1}
+            alt="logo1"
           />
         </div>
-        <div className="">
-          <img
-            src="assets/img/logo1.png"
-            width={341}
-            alt="Toggle opt"
-            height={104}
-          />
+        <div className="flex flex-col justify-center items-end">
+          {currentUser ? (
+            <small
+              style={{
+                fontFamily: 'Raleway, sans-serif',
+                color: 'var(--bs-primary-bg-subtle)',
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}
+            >
+              {user}
+            </small>
+          ) : null}
+          {currentUser ? (
+            <button className="bg-[#4aa6e8] ml-3" onClick={logout}>
+              Logout
+            </button>
+          ) : null}
         </div>
-      </div>
-      <div className="flex flex-col w-28 h-27 justify-center  items-center">
-        {currentUser ? (
-          <small
-            style={{
-              fontFamily: "Raleway, sans-serif",
-              color: "var(--bs-primary-bg-subtle)",
-              fontSize: 18,
-              fontWeight: "bold",
-              marginRight: "-2px",
-              marginLeft: "-8px",
-            }}
-          >
-            {user}
-          </small>
-        ) : null}
-        {currentUser ? (
-          <button style={{ backgroundColor: "#4aa6e8" }} onClick={logout}>
-            Logout
-          </button>
-        ) : null}
       </div>
     </div>
   );

@@ -23,7 +23,6 @@ function Dashboard() {
         if (!querySnapshot.empty) {
           const userData = querySnapshot.docs[0].data();
           setRole(userData.role);
-          console.log(userData);
         } else {
           console.log("User not found");
         }
@@ -37,11 +36,14 @@ function Dashboard() {
     fetchData();
   }, [currentUser]);
 
+  console.log("currentUser", currentUser);
+  console.log("role", role);
+
   while (loading) {
     return <Loading />;
   }
 
-  return <>{!loading && role === "admin" ? <Alfirnas /> : <MedLog />}</>;
+  return <>{role === "admin" ? <Alfirnas /> : <MedLog />}</>;
 }
 
 export default Dashboard;

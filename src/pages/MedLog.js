@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IntMap from "../Components/intmap/intMap";
 import Iframe from "react-iframe";
 import "../Components/TicketForm/TicketStyle.css";
@@ -6,6 +6,7 @@ import "../Components/local/rtl.css";
 import Titel from "../Components/Title";
 import Header from "../Layouts/Header/Header";
 import { useTranslation } from "react-i18next";
+import { CSVLink } from "react-csv";
 import "./med_log.css";
 import { dataref, firebaseStorage } from "../Config/Config";
 import DataTable from "../Components/DataTable/DataTable";
@@ -17,44 +18,50 @@ function MedLog() {
   // const [showForm, setShowForm] = useState(false);
   const { currentUser, logout } = useAuth();
   const [dire, setDirection] = useState("ltr");
+  const [csvArray, setCsvArray] = useState([]);
   const [data, setData] = useState([]);
   const handleDirectionChange = (newDirection) => {
     console.log(i18n);
     setDirection(newDirection);
   };
+  const headers = [
+    { label: "Ticket", key: "Ticket" },
+    { label: "callername", key: "callername" },
+    { label: "Date", key: "Date" },
+    { label: "subsublocationname", key: "subsublocationname" },
+    { label: "subsubclassificationname", key: "subsubclassificationname" },
+    { label: "category", key: "category" },
+    { label: "longitude", key: "longitude" },
+    { label: "latitude", key: "latitude" },
+    { label: "Department", key: "Department" },
+    { label: "Status", key: "Status" },
+  ];
 
   const getData = async () => {
     dataref.ref(`Sheet3`).on("value", (snapshot) => {
       let responselist = snapshot.val();
-      setData(responselist);
-      console.log(responselist);
+      const flattenedArray = Object.entries(responselist).map(
+        ([key, value]) => ({ ...value })
+      );
+      setData(flattenedArray);
+    });
+  };
+  const getExcelData = async () => {
+    dataref.ref(`Sheet3`).on("value", (snapshot) => {
+      let responselist = snapshot.val();
+      const flattenedArray = Object.entries(responselist).map(
+        ([key, value]) => ({ ...value })
+      );
+      setCsvArray(flattenedArray);
     });
   };
 
-  async function handleDownload() {
-    try {
-      // Replace 'your-file-path' with the actual path to the file in Firebase Storage
-      console.log("Called");
-      const fileRef = ref(
-        firebaseStorage,
-        "/TotalData/IncidentDetailsReport-Firna_s.xlsx"
-      );
-
-      // Get the download URL of the file
-      const downloadURL = await getDownloadURL(fileRef);
-
-      // Create a link and trigger a click to start the download
-      const link = document.createElement("a");
-      link.href = downloadURL;
-      link.download = "IncidentDetailsReport-Firna_s.xlsx"; // Set the desired file name
-      link.click();
-    } catch (error) {
-      console.error("Error downloading file:", error);
-    }
-  }
+  useEffect(() => {
+    getExcelData();
+  }, []);
 
   return (
-    <div>
+    <div className="bg-white h-screen overflow-y-scroll scrollbar-thin scrollbar-track-black scrollbar-thumb-[#025F5F] scrollbar-thumb-rounded-xl">
       <Titel />
       <Header
         handleDirectionChange={handleDirectionChange}
@@ -109,17 +116,9 @@ function MedLog() {
               </div>
             </div>
           </section>
-          {/* <h1
-        style={{
-          fontFamily: "Raleway, sans-serif",
-          fontSize: 35
-        }}
-      /> */}
 
-          <div>
-            <div>
-              <IntMap />
-            </div>
+          <div className="container">
+            <IntMap />
           </div>
 
           <footer>
@@ -161,35 +160,29 @@ function MedLog() {
             </div>
           </footer>
 
-          <div className="container" style={{ width: "100%", height: "900px" }}>
-            <p
-              className="mb-0"
-              style={{ fontFamily: "Raleway, sans-serif" }}
-            ></p>
-
+          <div className="container">
             <Iframe
               title="Report Section"
-              width="1300"
-              height="900"
+              // width="1300"
+              // height="900"
               src="https://app.powerbi.com/view?r=eyJrIjoiMDI1M2E4YTQtYTRhNC00MDhhLTk4YmItZmI4ODAwODE2ZGI5IiwidCI6ImI0NTNkOTFiLTZhYzEtNGI2MS1iOGI4LTVlNjVlNDIyMjMzZiIsImMiOjl9"
               frameborder="0"
               allowFullScreen="true"
               id="myId"
-              className="myClassname"
+              className="myClassname w-full h-screen"
             />
           </div>
-          <div className="container" style={{ marginTop: 20 }}>
-            <div style={{ flexDirection: "row" }}>
+
+          <div className="container mt-5">
+            <div className="mb-3" style={{ flexDirection: "row" }}>
               <button className="bttn__primary" onClick={() => getData()}>
                 Display Data
               </button>
-              <button
-                className="bttn__primary"
-                style={{ marginLeft: 20 }}
-                onClick={() => handleDownload()}
-              >
-                Download Excel
-              </button>
+              <CSVLink data={csvArray} headers={headers} separator={";"}>
+                <button className="bttn__primary" style={{ marginLeft: 20 }}>
+                  Download Excel
+                </button>
+              </CSVLink>
             </div>
             {data.length !== 0 ? <DataTable data={data} /> : null}
           </div>
@@ -202,9 +195,6 @@ function MedLog() {
           </footer>
         </section>
       </div>
-
-      <section />
-      <section />
     </div>
   );
 }
